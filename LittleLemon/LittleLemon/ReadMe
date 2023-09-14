@@ -1,0 +1,14 @@
+For Adding Menu items using raw data OPTION
+POST /api/menu-items
+HTTP 201 Created
+Allow: GET, POST, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+
+{
+    "id": 8,
+    "title": "Flavored Water",
+    "price": "2.50",
+    "featured": false,
+    "category": 2
+}
