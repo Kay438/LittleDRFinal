@@ -1,17 +1,14 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth.models import Group, User, Permission
-from django.contrib.auth import get_user_model
+from rest_framework.permissions import BasePermission
 
-class isManager(BasePermission):
-    def permissions(self, request, view):
-        return request.User.groups.filter(name='Manager').exists()
-    
-class isDeliveryCrew(AbstractBaseUser, PermissionsMixin):
-    def permissions(self, request, view):
-        return request.User.groups.filter(name='Manager'|'Delivery').exists()
+class IsManager(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Manager').exists()
 
-class isCustomer(AbstractBaseUser, PermissionsMixin):
-    def permissions(self, request, view):
+class IsDeliveryCrew(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Delivery Crew').exists()
+
+class IsCustomer(BasePermission):
+    def has_permission(self, request, view):
         excluded_groups = ['Manager', 'Delivery Crew']
-        return not request.User.groups.filter(name__in =excluded_groups).exists()
-    
+        return not request.user.groups.filter(name__in=excluded_groups).exists()
